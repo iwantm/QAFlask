@@ -1,0 +1,10 @@
+{% extends 'index.html' %}
+{% block content %}
+<table class="table">
+    {% for todo in todos %}
+    <tr>
+        <td>{{ todo.name }} - {{todo.description}}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock content %}
