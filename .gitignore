@@ -1,0 +1,3 @@
+/FlaskVenv/
+/apps/remote_database
+!**/__pycache__/
