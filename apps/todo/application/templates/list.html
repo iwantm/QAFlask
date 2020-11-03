@@ -3,7 +3,16 @@
 <table class="table">
     {% for todo in todos %}
     <tr>
-        <td>{{ todo.name }} - {{todo.description}}</td>
+        <td>{{ todo.name }} - {{todo.description}} - {{todo.completed}}
+            {% if todo.completed == False %}
+            <a type='button' class='btn btn-outline-primary' href='{{ url_for("complete", id=todo.id) }}'> Complete</a>
+            {% else %}
+            <a type='button' class='btn btn-outline-danger' href='{{ url_for("incomplete", id=todo.id) }}'>
+                Uncomplete</a>
+            {% endif %}
+            <a type='button' class='btn btn-danger' href='{{ url_for("delete", id=todo.id)}}'> Delete</a>
+            <a type='button' class='btn btn-outline-success' href='{{ url_for("update", id=todo.id)}}'> Update</a>
+        </td>
     </tr>
     {% endfor %}
 </table>

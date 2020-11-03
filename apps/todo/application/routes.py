@@ -24,3 +24,43 @@ def add():
         db.session.commit()
         return redirect(url_for('index'))
     return render_template('add.html', form=form)
+
+
+@app.route('/update/<int:id>', methods=["GET", "POST"])
+def update(id):
+    form = TodoForm()
+    current = Todos.query.get(id)
+    if request.method == 'GET':
+        form.name.data = current.name
+        form.description.data = current.description
+    if request.method == 'POST':
+        current.name = form.name.data
+        current.description = form.description.data
+        db.session.commit()
+        return redirect(url_for('index'))
+
+    return render_template('add.html', form=form)
+
+
+@app.route('/complete/<int:id>')
+def complete(id):
+    current = Todos.query.get(id)
+    current.completed = True
+    db.session.commit()
+    return(redirect(url_for('index')))
+
+
+@app.route('/incomplete/<int:id>')
+def incomplete(id):
+    current = Todos.query.get(id)
+    current.completed = False
+    db.session.commit()
+    return(redirect(url_for('index')))
+
+
+@app.route('/delete/<int:id>')
+def delete(id):
+    current = Todos.query.get(id)
+    db.session.delete(current)
+    db.session.commit()
+    return(redirect(url_for('index')))
