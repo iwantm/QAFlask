@@ -3,9 +3,9 @@
 <div class='form'>
     <form method="POST" action=''>
         {{ form.hidden_tag()}}
-        {{ form.name.label}} {{form.name}}
+        {{form.name(placeholder="Name")}}
         <br>
-        {{ form.description.label}} {{form.description}}
+        {{form.description(placeholder="Description")}}
         <br>
         {{ form.submit}}
     </form>
