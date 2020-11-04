@@ -6,9 +6,9 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>Todo</th>
-            <th>Finished</th>
-            <th></th>
+            <th class="w-100">Todo</th>
+            <th class="w-15">Finished</th>
+            <th class="w-10"></th>
         </tr>
     </thead>
     <tbody>
@@ -18,22 +18,24 @@
             {% if todo.completed == False %}
             <td><i class="far fa-times-circle"></i> No</td>
             {% else %}
-            <td><i class=" far fa-check-circle"></i>Yes</td>
+            <td><i class=" far fa-check-circle"></i> Yes</td>
             {% endif %}
-
             <td>
                 <div class="float-right mr-1">
-                    {% if todo.completed == False %}
-                    <a type='button' class='btn btn-outline-primary' href='{{ url_for("complete", id=todo.id) }}'>
-                        <i class=" far fa-check-circle"></i></a>
-                    {% else %}
-                    <a type='button' class='btn btn-outline-danger' href='{{ url_for("incomplete", id=todo.id) }}'>
-                        <i class="far fa-times-circle"></i></a>
-                    {% endif %}
-                    <a type='button' class='btn btn-outline-success' href='{{ url_for("update", id=todo.id)}}'><i
-                            class="far fa-edit"></i></a>
-                    <a type='button' class='btn btn-outline-danger' href='{{ url_for("delete", id=todo.id)}}'> <i
-                            class="far fa-trash-alt"></i></a>
+                    <div class="btn-group">
+                        {% if todo.completed == False %}
+
+                        <a type='button' class='btn btn-outline-primary ' href='{{ url_for("complete", id=todo.id) }}'>
+                            <i class=" far fa-check-circle"></i></a>
+                        {% else %}
+                        <a type='button' class='btn btn-outline-danger ' href='{{ url_for("incomplete", id=todo.id) }}'>
+                            <i class="far fa-times-circle"></i></a>
+                        {% endif %}
+                        <a type='button' class='btn btn-outline-success ' href='{{ url_for("update", id=todo.id)}}'><i
+                                class="far fa-edit"></i></a>
+                        <a type='button' class='btn btn-outline-danger ' href='{{ url_for("delete", id=todo.id)}}'>
+                            <i class="far fa-trash-alt"></i></a>
+                    </div>
                 </div>
             </td>
         </tr>

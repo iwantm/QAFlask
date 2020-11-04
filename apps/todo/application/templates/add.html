@@ -1,19 +1,20 @@
 {% extends 'index.html' %}
 
 {% block content %}
-<div class='form'>
-    <form method="POST" action=''>
+<form method="POST" role='form'>
+    <div class='form-group'>
         {{ form.hidden_tag()}}
-        {{form.name(placeholder="To do")}}
+        {{form.name(class="form-control form-control-lg " + (" is-invalid" if form.name.errors else "") + " mt-3")}}
+
         <br>
         {% if form.name.errors %}
-        <div class="error">
-            {% for error in form.name.errors %}
-            <h1>{{ error }}</h1>
-            {% endfor %}
+        {% for error in form.name.errors %}
+        <div class="invalid-feedback mt-n4">
+            <h6>{{ error }}</h6>
         </div>
+        {% endfor %}
         {% endif %}
-        {{ form.submit}}
-    </form>
-</div>
+        {{ form.submit(class="btn btn-outline-success btn-block ")}}
+    </div>
+</form>
 {% endblock content %}

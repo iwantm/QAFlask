@@ -22,6 +22,6 @@ class TodoForm(FlaskForm):
     name = StringField(u'Name', validators=[
         DataRequired(),
         CheckIfExists(),
-        Length(min=5, max=15)
+        Length(min=5, max=50)
     ])
     submit = SubmitField('Add Todo')
