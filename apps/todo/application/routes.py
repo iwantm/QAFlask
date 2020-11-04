@@ -17,11 +17,12 @@ def add():
     form = TodoForm()
 
     if request.method == 'POST':
-        name = form.name.data
-        todo = Todos(name=name)
-        db.session.add(todo)
-        db.session.commit()
-        return redirect(url_for('index'))
+        if form.validate_on_submit():
+            name = form.name.data
+            todo = Todos(name=name)
+            db.session.add(todo)
+            db.session.commit()
+            return redirect(url_for('index'))
     return render_template('add.html', form=form)
 
 

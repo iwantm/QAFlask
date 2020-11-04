@@ -6,6 +6,13 @@
         {{ form.hidden_tag()}}
         {{form.name(placeholder="To do")}}
         <br>
+        {% if form.name.errors %}
+        <div class="error">
+            {% for error in form.name.errors %}
+            <h1>{{ error }}</h1>
+            {% endfor %}
+        </div>
+        {% endif %}
         {{ form.submit}}
     </form>
 </div>
