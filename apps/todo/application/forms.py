@@ -14,7 +14,7 @@ class CheckIfExists:
 
     def __call__(self, form, field):
         for todo in self.todos:
-            if field.data.lower() == todo.name.lower():
+            if field.data.lower().replace(" ", "") == todo.name.lower().replace(" ", ""):
                 raise ValidationError(self.message)
 
 
