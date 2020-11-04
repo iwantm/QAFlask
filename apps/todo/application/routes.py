@@ -18,8 +18,7 @@ def add():
 
     if request.method == 'POST':
         name = form.name.data
-        desciption = form.description.data
-        todo = Todos(name=name, description=desciption)
+        todo = Todos(name=name)
         db.session.add(todo)
         db.session.commit()
         return redirect(url_for('index'))
@@ -32,10 +31,8 @@ def update(id):
     current = Todos.query.get(id)
     if request.method == 'GET':
         form.name.data = current.name
-        form.description.data = current.description
     if request.method == 'POST':
         current.name = form.name.data
-        current.description = form.description.data
         db.session.commit()
         return redirect(url_for('index'))
 
