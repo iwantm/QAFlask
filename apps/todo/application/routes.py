@@ -1,14 +1,29 @@
 from application import app, db
 from flask import render_template, request, redirect, url_for
-from application.forms import TodoForm
+from application.forms import TodoForm, OrderingForm
 from application.models import Todos
 
 
-@app.route('/')
+@app.route('/', methods=['POST', 'GET'])
 def index():
-    all_todos = Todos.query.all()
+    form = OrderingForm()
+    total = {
+        'complete': Todos.query.filter_by(completed=True).count(),
+        'all': Todos.query.count()
+    }
+    todos = []
+    if form.order.data == 'new':
+        todos = Todos.query.order_by(Todos.id.desc()).all()
+    elif form.order.data == 'completed':
+        todos = Todos.query.order_by(Todos.completed.desc()).all()
+    elif form.order.data == 'incomplete':
+        todos = Todos.query.order_by(Todos.completed.asc()).all()
+    elif form.order.data == 'old':
+        todos = Todos.query.order_by(Todos.id.asc()).all()
+    else:
+        todos = Todos.query.all()
 
-    return render_template('list.html', todos=all_todos)
+    return render_template('list.html', todos=todos, form=form, total=total)
 
 
 @app.route('/add', methods=['GET', 'POST'])

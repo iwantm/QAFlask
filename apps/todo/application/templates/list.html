@@ -1,13 +1,27 @@
 {% extends 'index.html' %}
+
 {% block add %}
-<a class="btn btn-outline-success float-right" href='{{url_for("add")}}'><i class=" fas fa-plus"></i></a>
+<form class="form-inline my-2 my-lg-0" action='{{ url_for("index") }}' method='POST'>
+    {{ form.order(class="form-control form-control-sm mr-sm-2") }}{{ form.submit(class="btn btn-outline-primary my-2 my-sm-0 btn-sm") }}
+</form>
+<a class="btn ml-3 btn-outline-success float-right" href='{{url_for("add")}}'><i class=" fas fa-plus"></i></a>
 {% endblock add %}
 {% block content %}
 <table class="table table-striped">
+
     <thead>
         <tr>
-            <th class="w-100">Todo</th>
-            <th class="w-15">Finished</th>
+            {% if total['all'] == 0 %}
+            <th class="w-75">Todo - Add Some Todos </th>
+            {% elif total['all'] == total['complete'] %}
+            <th class="w-75">Todo - Well Done </th>
+            {% elif total['all'] - total['complete'] > 3 %}
+            <th class="w-75">Todo - You are falling behind </th>
+            {% else %}
+            <th class="w-75">Todo</th>
+            {% endif %}
+
+            <th class="w-20">Finished {{ total['complete']|string+'/'+total['all']|string }}</th>
             <th class="w-10"></th>
         </tr>
     </thead>
