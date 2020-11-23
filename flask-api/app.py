@@ -15,35 +15,35 @@ def get_text():
 
 
 @app.route('/info/add/<string:key>', methods=['POST'])
-def post_text():
+def post_text(key):
     # adding the new key-value pair
     if key not in information:
-        information[key] = request.data.decode('utf-8')
-        return Response(key + " added to information with value: " + request.data.decode('utf-8'), mimetype='text/plain')
+        information[key] = request.get_json()[key]
+        return jsonify({"added": request.get_json()})
     else:
-        return Response(key + " already exists.", mimetype='text/plain')
+        return jsonify({"error": "key exists"})
 
 # We will implement update functionality (PUT request) with the same URL as the route for POST requests, but with a PUT method. Similar to before, we want to check the dictionary for pre-existence so that we only implement changes if the key already exists.
 
 
 @app.route('/info/update/<string:key>', methods=['PUT'])
-def put_text():
+def put_text(key):
     if key in information:
-        information[key] = request.data.decode('utf-8')
-        return Response(key + " changed to: " + request.data.decode('utf-8'), mimetype='text/plain')
+        information[key] = request.get_json()[key]
+        return jsonify({"updated": request.get_json()})
     else:
-        return Response(key + " not found.", mimetype='text/plain')
+        return jsonify({"error": "key doesn't exist"})
 
 # Finally, we add a function so that if the request is DELETE, we delete that key from the dictionary.
 
 
 @app.route('/info/delete/<string:key>', methods=['DELETE'])
-def delete_text():
+def delete_text(key):
     if key in information:
         information.pop(key)
-        return Response(key + " deleted from information. ", mimetype='text/plain')
+        return jsonify({"deleted": key})
     else:
-        return Response(key + " not found.", mimetype='text/plain')
+        return jsonify({"error": "key doesn't exist"})
 
 
 # Make app callabale from the command line
